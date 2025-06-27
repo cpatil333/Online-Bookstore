@@ -1,0 +1,19 @@
+mutation ($newUser: UserInput!) {
+  singup(newUser: $newUser) {
+    token
+    user {
+      id
+      fullName
+      role
+    }
+  }
+}
+
+{
+  "newUser": {
+    "fullName": "Jane Smith",
+    "email": "jane@example.com",
+    "password": "jane123",
+    "role": "CUSTOMER"
+  }
+}
