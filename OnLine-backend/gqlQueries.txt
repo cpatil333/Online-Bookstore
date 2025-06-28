@@ -17,3 +17,92 @@ mutation ($newUser: UserInput!) {
     "role": "CUSTOMER"
   }
 }
+
+mutation($loginUser: LoginInput!){
+  login(loginUser: $loginUser) {
+    token
+    user {
+      id
+      fullName
+    }
+  }
+}
+
+{
+  "loginUser": {
+    "email": "admin@example.com",
+    "password": "admin123"
+  }
+}
+
+mutation($newBook: BookInput!){
+  addBook(newBook: $newBook) {
+    id
+    title
+    description
+    author
+    image
+    price
+  }
+}
+
+{
+  "newBook": {
+    "title": "The Pragmatic Programmer",
+    "author": "Andrew Hunt",
+    "description":"Classic for developers",
+    "image": "uploads//pragmatic.jpg",
+    "price": 45.99,
+    "stock": 50
+  }
+}
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1MTAxMzY5OX0.ox5meb1T9DbUedComkjzwnwn6_qzl7rSS0VhaO0SpLg
+
+mutation($updateBook: updateBookInput!){
+  updateBook(updateBook: $updateBook) {
+    id
+    title
+    author
+  }
+}
+
+{
+  "updateBook": {
+    "id": 1,
+     "title": "The Pragmatic Programmer",
+    "author": "Chandrashekhar",
+    "description":"evelopers",
+    "image": "uploads//cleancode.jpg",
+    "price": 29.99,
+    "stock": 100
+  }
+}
+
+mutation ($deleteBookId: ID!) {
+  deleteBook(id: $deleteBookId) {
+    title
+  }
+}
+
+{
+  "deleteBookId": 1
+}
+
+mutation($items: [OrderItemInput!]!){
+  placeOrder(items: $items) {
+    userId
+    totalAmount
+    items {
+      id
+      price
+      quantity
+    }
+  }
+}
+
+{
+  "items": [
+      { "bookId": 1, "quantity": 2 }
+      { "bookId": 3, "quantity": 1 }
+    ]
+}

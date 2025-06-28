@@ -21,6 +21,7 @@ const typeDefs = gql`
     description: String!
     price: Float!
     image: String!
+    stock: Int!
   }
 
   type Order {
@@ -39,18 +40,16 @@ const typeDefs = gql`
     price: Float!
   }
 
-  type Query {
-    users: [User!]!
-    books: [Book!]!
-    orders: [Order!]!
-    orderItems: [OrderItem!]!
-  }
-
   input UserInput {
     fullName: String!
     email: String!
     password: String!
     role: Role!
+  }
+
+  input LoginInput {
+    email: String!
+    password: String!
   }
 
   type AuthPayload {
@@ -64,6 +63,16 @@ const typeDefs = gql`
     description: String!
     price: Float!
     image: String!
+    stock: Int!
+  }
+  input updateBookInput {
+    id: ID!
+    title: String!
+    author: String!
+    description: String!
+    price: Float!
+    image: String!
+    stock: Int!
   }
   input OrderInput {
     userId: Int!
@@ -76,12 +85,26 @@ const typeDefs = gql`
     quantity: Int!
     price: Float!
   }
+  input OrderItemInput {
+    bookId: ID!
+    quantity: Int!
+  }
+
+  type Query {
+    users: [User!]!
+    books: [Book!]!
+    book(id: ID!): Book!
+    orders: [Order!]!
+  }
 
   type Mutation {
     singup(newUser: UserInput!): AuthPayload!
+    login(loginUser: LoginInput!): AuthPayload!
     addBook(newBook: BookInput!): Book!
-    addOrder(newOrder: OrderInput!): Order!
-    addOrderItems(newOrderItems: OrderItemsInput!): OrderItem!
+    updateBook(updateBook: updateBookInput!): Book!
+    deleteBook(id: ID!): Book
+    # //Order
+    placeOrder(items: [OrderItemInput!]!): Order!
   }
 `;
 

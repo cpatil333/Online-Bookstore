@@ -7,6 +7,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
+import routeUploads from "./src/middleware/upload.js";
 
 dotenv.config();
 const app = express();
@@ -14,6 +15,9 @@ const prisma = new PrismaClient();
 
 app.use(cors());
 app.use(express.json());
+
+app.use("/uploads", routeUploads)
+app.use("/uploads", express.static("uploads"))
 
 const server = new ApolloServer({
   typeDefs,
