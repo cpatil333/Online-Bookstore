@@ -17,6 +17,7 @@ enum Role {
   ADMIN
   CUSTOMER
 }
+
 model User {
   id  Int   @id   @default(autoincrement())
   fullName  String
@@ -26,8 +27,9 @@ model User {
   orders    Order[]
   createdAt DateTime @default(now())
 }
+
 model Book {
-  id          Int @id @default(autoincrement())
+  id         Int   @id   @default(autoincrement())
   title       String
   author      String
   description String
@@ -57,4 +59,3 @@ model OrderItems {
  price      Float
  createdAt  DateTime  @default(now())
 }
-

@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { USER_REGISTER } from "../apollo/Mutation";
-import { useMutation } from "@apollo/client";
+import { ADD_USER } from "../../apollo/Mutation";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setCredentials } from "../utils/Auth/authSlice";
-import "../styles/common.css";
+import { useMutation} from "@apollo/client";
+import "../../styles/common.css";
 
-const Register = () => {
+const CreateUser = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [formData, setFormData] = useState({});
-  const [register] = useMutation(USER_REGISTER);
+  const [register] = useMutation(ADD_USER, {
+    onCompleted() {
+      navigate("/");
+    },
+  });
 
   const handleChange = (e) => {
     setFormData({
@@ -28,30 +29,19 @@ const Register = () => {
         },
       });
       if (data?.signup) {
-        dispatch(
-          setCredentials({
-            user: {
-              fullName: data.signup.user.fullName,
-              role: data.signup.user.role,
-              userId: data.signup.user.id,
-            },
-            token: localStorage.setItem("token", data.signup.token),
-          })
-        );
-        alert("User registered successfully!");
-        navigate("/");
+        alert("New User registered successfully!");
       } else {
-        alert("Registration failed.");
+        alert("New User Registration failed.");
       }
     } catch (error) {
-      console.error("Registration Error:", error.message);
-      alert("Registration failed. Check console.");
+      console.error("New User Registration Error:", error.message);
+      alert("New User Registration failed. Check console.");
     }
   };
 
   return (
     <div className="main-container">
-      <h2>Register</h2>
+      <h2>New User Register</h2>
       <div className="login-container">
         <form onSubmit={handleSubmit}>
           <div>
@@ -92,4 +82,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default CreateUser;

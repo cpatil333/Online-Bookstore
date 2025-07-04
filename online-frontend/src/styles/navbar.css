@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+nav {
+  display: flex;
+  gap: 10px;
+  width: 95%;
+  height: 40px;
+  margin: auto;
+  background-color: purple;
+}
+
+nav li {
+  color: white;
+  font-size: 18px;
+  text-decoration: none;
+  list-style-type: none;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+}
+.link {
+  color: white;
+  text-decoration: none;
+}

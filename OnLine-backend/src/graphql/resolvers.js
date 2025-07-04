@@ -9,13 +9,42 @@ const prisma = new PrismaClient();
 
 const resolvers = {
   Query: {
-    users: async () => {
+    users: async (_, __, { user }) => {
+      isAuth(user);
       return await prisma.user.findMany();
+    },
+
+    getUserById: async (_, { id }, { user }) => {
+      isAuth(user);
+      const userId = parseInt(id);
+
+      const existUser = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+
+      if (!existUser) {
+        throw new Error("No such type user exist.!");
+      }
+
+      return existUser;
+    },
+
+    books: async (_, __, { user }) => {
+      isAuth(user);
+      return await prisma.book.findMany();
+    },
+
+    bookById: async (_, { id }, { user }) => {
+      isAuth(user);
+      const bookId = parseInt(id);
+      return await prisma.book.findUnique({
+        where: { id: bookId },
+      });
     },
   },
 
   Mutation: {
-    singup: async (_, { newUser }) => {
+    signup: async (_, { newUser }) => {
       const existEmail = await prisma.user.findFirst({
         where: { email: newUser.email },
       });
@@ -33,6 +62,7 @@ const resolvers = {
       });
       const token = await jwt.sign(
         {
+          fullName: user.fullName,
           userId: user.id,
           role: user.role,
         },
@@ -60,12 +90,55 @@ const resolvers = {
       }
       const token = await jwt.sign(
         {
+          fullName: user.fullName,
           userId: user.id,
           role: user.role,
         },
         process.env.JWT_SECRET
       );
       return { token, user };
+    },
+
+    updateUser: async (_, { updateUser }, { user }) => {
+      isAuth(user);
+      const userId = parseInt(updateUser.id);
+
+      const existUser = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+
+      if (!existUser) {
+        throw new Error("No such type user exist.!");
+      }
+
+      const hassedPassword = await bcryptjs.hash(updateUser.password, 10);
+
+      const udpateData = await prisma.user.update({
+        where: { id: existUser.id },
+        data: {
+          fullName: updateUser.fullName,
+          email: updateUser.email,
+          password: hassedPassword,
+          role: updateUser.role,
+        },
+      });
+      return udpateData;
+    },
+
+    deleteUser: async (_, { id }, { user }) => {
+      isAuth(user);
+      const userId = parseInt(id);
+      const existUser = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+      if (!existUser) {
+        throw new Error("User does not exist!");
+      }
+      await prisma.user.delete({
+        where: { id: userId },
+      });
+      const message = "User deleted!";
+      return message;
     },
 
     addBook: async (_, { newBook }, { user }) => {

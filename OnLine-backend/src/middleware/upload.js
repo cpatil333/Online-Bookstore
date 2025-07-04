@@ -1,13 +1,17 @@
 import multer from "multer";
 import express from "express";
+import path from "path";
 
 const router = express.Router();
 
+const uploadPath = path.join(process.cwd(), "src", "uploads");
+
+console.log(uploadPath);
 const storage = multer.diskStorage({
-  diskStorage: (req, file, db) => {
-    cb(null, "uploads/");
+  destination: (req, file, cb) => {
+    cb(null, uploadPath); // correct key is `destination`, not `diskStorage`
   },
-  filename: (req, file, db) => {
+  filename: (req, file, cb) => {
     const uniqueFile = Date.now() + "-" + file.originalname;
     cb(null, uniqueFile);
   },

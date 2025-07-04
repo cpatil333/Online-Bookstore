@@ -24,6 +24,7 @@ mutation($loginUser: LoginInput!){
     user {
       id
       fullName
+      role
     }
   }
 }
@@ -105,4 +106,89 @@ mutation($items: [OrderItemInput!]!){
       { "bookId": 1, "quantity": 2 }
       { "bookId": 3, "quantity": 1 }
     ]
+}
+
+mutation($updateUser: updateUserInput!){
+  updateUser(updateUser: $updateUser) {
+    id
+    fullName
+    email
+    role
+  }
+}
+
+{
+  "updateUser": {
+    "id": 3,
+     "fullName": "Jane Smith new",
+    "email": "jane@example.com",
+    "password": "jane123",
+    "role": "CUSTOMER"
+  }
+}
+
+mutation($deleteUserId: ID!){
+  deleteUser(id: $deleteUserId) {
+    id
+    fullName
+    email
+    role
+  }
+}
+
+{
+  "deleteUserId": 1
+}
+
+Queries 
+==============
+1. Get all Users list
+query{
+  users {
+    id
+    fullName
+    email
+    role
+  }
+}
+
+query($getUserById: ID!){
+  getUserById(id: $getUserById) {
+    id
+    fullName
+    email
+    role
+  }
+}
+
+{
+  "getUserById": 1
+}
+
+1. Get all Books list
+query{
+  books {
+    id
+    title
+    author
+    stock
+    image
+    price
+  }
+}
+
+query($bookById: ID!){
+  bookById(id: $bookById) {
+    id
+    title
+    author
+    description
+    image
+    price
+    stock
+  }
+}
+
+{
+  "bookById": 1
 }
