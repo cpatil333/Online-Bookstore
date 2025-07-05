@@ -15,9 +15,11 @@ const Home = () => {
     navigate("/login");
   }
 
-  const { data, loading, error, refetch } = useQuery(GET_USER_LIST);
+  const { data, loading, error } = useQuery(GET_USER_LIST, {
+    fetchPolicy: "network-only",
+  });
   const [delUser] = useMutation(DELETE_USER);
-  
+
   if (loading) return <p>Loading...</p>;
   if (error) {
     console.log("Error ", error.message);
@@ -33,7 +35,7 @@ const Home = () => {
           deleteUserId: parseInt(id),
         },
       });
-      await refetch(); // ✅ Force reload user list
+
       alert("User Deleted!");
     } catch (error) {
       console.error("User Delete failed:", error.message);

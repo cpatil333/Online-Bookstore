@@ -114,7 +114,7 @@ const typeDefs = gql`
     updateUser(updateUser: UpdateUserInput!): User!
     deleteUser(id: ID!): User!
     addBook(newBook: AddBookInput!): Book!
-    updateBook(updateBook: UpdateBookInput!): Book!
+    updateBook(editBook: UpdateBookInput!): Book!
     deleteBook(id: ID!): Book
     # //Order
     placeOrder(items: [OrderItemInput!]!): Order!

@@ -72,3 +72,13 @@ export const ADD_BOOK = gql`
     }
   }
 `;
+
+export const UDPATE_BOOK = gql`
+  mutation ($editBook: UpdateBookInput!) {
+    updateBook(editBook: $editBook) {
+      id
+      title
+      author
+    }
+  }
+`;

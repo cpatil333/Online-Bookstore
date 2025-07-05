@@ -9,6 +9,7 @@ const Books = () => {
   const { data, loading, error } = useQuery(GET_BOOK_LIST, {
     fetchPolicy: "network-only",
   });
+
   const token = localStorage.getItem("token") || "";
   const location = useLocation();
   const path = location.pathname.toLowerCase();
@@ -17,6 +18,7 @@ const Books = () => {
   if (error) {
     console.log("Error ", error.message);
   }
+
   if (data.books.length === 0) {
     return <p>No Data available!</p>;
   }
@@ -29,13 +31,20 @@ const Books = () => {
     <div className="book-container">
       {data?.books?.map((book) => (
         <div className="book-card" key={book.id}>
-          <img src={book.image} alt={book.title} className="book-image" />
+          <img
+            src={`http://localhost:4000/uploads/${book.image}`}
+            alt={book.title}
+            className="book-image"
+          />
           <h3>{book.title}</h3>
           <p>Author: {book.author}</p>
           <p>{book.description}</p>
           <p>₹{book.price}</p>
           <p>Stock: {book.stock}</p>
           <button onClick={() => navigate("/add-book")}>Add to Cart</button>
+          <button onClick={() => navigate(`/update-book/${book.id}`)}>
+            Update Cart
+          </button>
         </div>
       ))}
     </div>

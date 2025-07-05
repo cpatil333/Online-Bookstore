@@ -8,7 +8,11 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
 import routeUploads from "./src/middleware/upload.js";
+import path from "path";
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
 const prisma = new PrismaClient();
@@ -17,7 +21,9 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/uploads", routeUploads)
-app.use("/uploads", express.static("uploads"))
+//app.use("/uploads", express.static("uploads"))
+// ✅ Make 'uploads' publicly accessible
+app.use("/uploads", express.static(path.join(__dirname, "src/uploads")));
 
 const server = new ApolloServer({
   typeDefs,

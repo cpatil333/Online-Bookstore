@@ -150,27 +150,27 @@ const resolvers = {
       });
     },
 
-    updateBook: async (_, { updateBook }, { user }) => {
+    updateBook: async (_, { editBook }, { user }) => {
       isAuth(user);
-      const BookId = parseInt(updateBook.id);
+      const BookId = parseInt(editBook.id);
       const existBookId = await prisma.book.findUnique({
         where: { id: BookId },
       });
       if (!existBookId) {
         throw new Error("Book Id does not exist!");
       }
-      const updatedBook = await prisma.book.update({
-        where: { id: BookId },
+      const updateData = await prisma.book.update({
+        where: { id: existBookId.id },
         data: {
-          title: updateBook.title,
-          author: updateBook.author,
-          description: updateBook.description,
-          price: parseFloat(updateBook.price),
-          image: updateBook.image,
-          stock: parseInt(updateBook.stock),
+          title: editBook.title,
+          author: editBook.author,
+          description: editBook.description,
+          price: parseFloat(editBook.price),
+          image: editBook.image,
+          stock: parseInt(editBook.stock),
         },
       });
-      return updatedBook;
+      return updateData;
     },
 
     deleteBook: async (_, { id }, { user }) => {

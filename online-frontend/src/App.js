@@ -10,6 +10,7 @@ import OrderItems from "./pages/OrderItems.js";
 import CreateUser from "./pages/User/CreateUser.js";
 import EditUser from "./pages/User/EditUser.js";
 import CreateBook from "./pages/Book/CreateBook.js";
+import EditBook from "./pages/Book/EditBook.js";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/book-list" element={<BookList />} />
           <Route path="/add-book" element={<CreateBook />} />
+          <Route path="/update-book/:id" element={<EditBook />} />
           <Route path="/order-list" element={<OrderList />} />
           <Route path="/order-items-list" element={<OrderItems />} />
           <Route path="/register" element={<Register />} />
