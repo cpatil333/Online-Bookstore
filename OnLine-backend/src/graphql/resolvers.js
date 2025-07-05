@@ -41,6 +41,35 @@ const resolvers = {
         where: { id: bookId },
       });
     },
+
+    orders: async () => {
+      return await prisma.order.findMany();
+    },
+
+    items: async () => {
+      return await prisma.orderItems.findMany();
+    },
+  },
+
+  Order: {
+    user: async (parent, _) => {
+      return await prisma.user.findUnique({
+        where: { id: parent.userId },
+      });
+    },
+    items: async (parent, _) => {
+      return await prisma.orderItems.findMany({
+        where: { orderId: parent.id },
+      });
+    },
+  },
+  
+  OrderItems: {
+    book: async (parent, _) => {
+      return await prisma.book.findUnique({
+        where: { id: parent.bookId },
+      });
+    },
   },
 
   Mutation: {

@@ -48,3 +48,25 @@ export const GET_BOOK_ID = gql`
     }
   }
 `;
+
+export const GET_ORDERS_LIST = gql`
+  query {
+    orders {
+      id
+      userId
+      user {
+        fullName
+      }
+      totalAmount
+      items {
+        id
+        bookId
+        book {
+          title
+        }
+        quantity
+        price
+      }
+    }
+  }
+`;

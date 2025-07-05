@@ -27,15 +27,17 @@ const typeDefs = gql`
   type Order {
     id: ID!
     user: User!
-    items: [OrderItem!]!
+    items: [OrderItems!]!
     userId: Int!
     totalAmount: Float!
   }
 
-  type OrderItem {
+  type OrderItems {
     id: ID!
     order: Order!
+    orderId: Int!
     book: Book!
+    bookId: Int!
     quantity: Int!
     price: Float!
   }
@@ -73,7 +75,7 @@ const typeDefs = gql`
     image: String!
     stock: Int!
   }
-  
+
   input UpdateBookInput {
     id: ID!
     title: String!
@@ -95,16 +97,13 @@ const typeDefs = gql`
     quantity: Int!
     price: Float!
   }
-  input OrderItemInput {
-    bookId: ID!
-    quantity: Int!
-  }
 
   type Query {
     users: [User!]!
     books: [Book!]!
     bookById(id: ID!): Book!
     orders: [Order!]!
+    items: [OrderItems!]!
     getUserById(id: ID!): User!
   }
 
@@ -117,7 +116,7 @@ const typeDefs = gql`
     updateBook(editBook: UpdateBookInput!): Book!
     deleteBook(id: ID!): Book
     # //Order
-    placeOrder(items: [OrderItemInput!]!): Order!
+    placeOrder(items: [OrderItemsInput!]!): Order!
   }
 `;
 

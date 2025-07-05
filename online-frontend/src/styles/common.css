@@ -96,3 +96,34 @@ table tbody tr td {
   font-size: 20px;
   border-radius: 5px;
 }
+
+/* src/styles/orderList.css */
+.order-list {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.order-card {
+  background: #f9f9f9;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px #ccc;
+}
+
+.order-items {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.order-items th, .order-items td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.order-items th {
+  background-color: purple;
+  color:white;
+}

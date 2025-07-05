@@ -192,3 +192,26 @@ query($bookById: ID!){
 {
   "bookById": 1
 }
+
+--Get Order list
+query{
+  orders {
+    id
+    userId
+    user {
+      fullName
+    }
+    totalAmount
+    items {
+      id
+      bookId
+      book {
+        title
+      }
+      quantity
+      price
+    }
+  }
+}
+
+
